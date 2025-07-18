@@ -3,23 +3,23 @@ name: Govericks Engine
 on:
   schedule:
     - cron: '0 * * * *'  # Runs every hour
-  workflow_dispatch:     # Allows manual trigger if needed
+  workflow_dispatch:      # Allows manual trigger if needed
 
 jobs:
   run-govericks:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
-        with: python-version: '3.10'
-          
+        with:
+          python-version: '3.10'
 
       - name: Install dependencies
-        run:  pip install -r requirements.txt
-          
+        run: pip install -r requirements.txt
 
       - name: Run Govericks script
-        run:  python govericks_agent.py 
+        run: python govericks_agent.py 
