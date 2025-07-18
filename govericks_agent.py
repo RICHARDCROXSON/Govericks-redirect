@@ -1,19 +1,18 @@
 import requests
-import os
 
-# 🔑 Set your LangSearch API key here or via environment variable
-LANGSEARCH_API_KEY = os.getenv("sk-bf2473b2f5dd4deb84ddc54bf1ca8d22") or "YOUR_API_KEY_HERE"
+# 🔐 Your LangSearch API key — confirmed and locked
+LANGSEARCH_API_KEY = "sk-bf2473b2f5dd4deb84ddc54bf1ca8d22"  # ← Replace with your exact key if not already in place
 
-# 🧭 LangSearch API endpoint
+# 🌐 LangSearch API endpoint
 url = "https://api.langsearch.com/v1/web-search"
 
-# 📦 Request headers
+# 📦 Headers needed by LangSearch
 headers = {
     "Authorization": f"Bearer {LANGSEARCH_API_KEY}",
     "Content-Type": "application/json"
 }
 
-# 📨 Query payload — adjust this to fit your focus
+# 📝 The payload you tested manually and know returns results
 payload = {
     "query": "UK legal policy updates",
     "freshness": "sixMonths",
@@ -21,25 +20,25 @@ payload = {
     "count": 100
 }
 
-# 🚀 Make the API call using proper JSON formatting
+# 🚀 Send the request using proper JSON formatting
 response = requests.post(url, headers=headers, json=payload)
 
-# 📊 Print status and raw response text
+# 📊 Print status and raw response — shows exactly what LangSearch replies
 print("Status Code:", response.status_code)
 print("Raw Response:", response.text)
 
-# 🧠 Parse results and summarize
+# 🔍 Try to parse response — this will succeed or clearly show why it doesn't
 try:
     data = response.json()
     results = data.get("webPages", {}).get("value", [])
 
     if results:
         print(f"\n✅ Found {len(results)} result(s):\n")
-        for i, item in enumerate(results[:5], 1):  # Show first 5 results
+        for i, item in enumerate(results[:5], 1):  # Display top 5
             print(f"{i}. {item.get('name')}")
             print(f"   {item.get('snippet')}")
             print(f"   {item.get('url')}\n")
     else:
-        print("\n⚠ No vector matches found. Try refining the query.")
+        print("\n⚠ No matches returned — LangSearch is working but found no vector content matching your query.")
 except Exception as e:
-    print("❌ Error parsing response:", str(e))
+    print("❌ Error parsing LangSearch response:", str(e))
