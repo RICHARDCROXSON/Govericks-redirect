@@ -1,33 +1,45 @@
-name: Govericks Engine
+import requests
+import os
 
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
-  schedule:
-    - cron: '0 * * * *'
+# 🔑 Set your LangSearch API key here or via environment variable
+LANGSEARCH_API_KEY = os.getenv("sk-bf2473b2f5dd4deb84ddc54bf1ca8d22") or "YOUR_API_KEY_HERE"
 
-jobs:
-  run-govericks:
-    runs-on: ubuntu-latest
+# 🧭 LangSearch API endpoint
+url = "https://api.langsearch.com/v1/web-search"
 
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+# 📦 Request headers
+headers = {
+    "Authorization": f"Bearer {LANGSEARCH_API_KEY}",
+    "Content-Type": "application/json"
+}
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with: python-version: '3.10'
+# 📨 Query payload — adjust this to fit your focus
+payload = {
+    "query": "UK legal policy updates",
+    "freshness": "sixMonths",
+    "summary": True,
+    "count": 100
+}
 
-      - name: Show directory contents
-        run: ls -la
+# 🚀 Make the API call using proper JSON formatting
+response = requests.post(url, headers=headers, json=payload)
 
-      - name: Confirm Python version
-        run: python --version
+# 📊 Print status and raw response text
+print("Status Code:", response.status_code)
+print("Raw Response:", response.text)
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+# 🧠 Parse results and summarize
+try:
+    data = response.json()
+    results = data.get("webPages", {}).get("value", [])
 
-      - name: Run Govericks script
-        run: python govericks_agent.py 
+    if results:
+        print(f"\n✅ Found {len(results)} result(s):\n")
+        for i, item in enumerate(results[:5], 1):  # Show first 5 results
+            print(f"{i}. {item.get('name')}")
+            print(f"   {item.get('snippet')}")
+            print(f"   {item.get('url')}\n")
+    else:
+        print("\n⚠ No vector matches found. Try refining the query.")
+except Exception as e:
+    print("❌ Error parsing response:", str(e))
