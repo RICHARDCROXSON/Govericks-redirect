@@ -1,9 +1,8 @@
-import os
 import requests
 import json
 
-# ✅ Get API key from GitHub Secrets
-API_KEY = os.getenv("sk-bf2473b2f5dd4deb84ddc54bf1ca8d22")
+# 🚧 TEMPORARY: Hardcoded API key for testing
+API_KEY = "sk-bf2473b2f5dd4deb84ddc54bf1ca8d22"  # ← Replace this with your actual LangSearch key
 
 # 🔍 LangSearch query setup
 url = "https://api.langsearch.com/v1/web-search"
