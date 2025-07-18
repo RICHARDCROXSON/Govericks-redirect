@@ -1,18 +1,18 @@
 import requests
 
-# 🔐 Insert your real LangSearch API key between the quotes below
-LANGSEARCH_API_KEY = "sk-bf2473b2f5dd4deb84ddc54bf1ca8d22"  # ← Replace this with your actual key
+# 🔐 Your actual LangSearch API key goes here — replace the placeholder below
+LANGSEARCH_API_KEY = "sk-bf2473b2f5dd4deb84ddc54bf1ca8d22"  # ✅ Replace with your real key — no quotes around spaces
 
 # 🌐 LangSearch API endpoint
 url = "https://api.langsearch.com/v1/web-search"
 
-# 📦 Request headers — using your key
+# 📦 Headers for request — including your API key and correct content type
 headers = {
     "Authorization": f"Bearer {LANGSEARCH_API_KEY}",
     "Content-Type": "application/json"
 }
 
-# 📨 Query payload
+# 📨 Query payload — structured exactly as LangSearch expects
 payload = {
     "query": "UK legal policy updates",
     "freshness": "sixMonths",
@@ -20,26 +20,26 @@ payload = {
     "count": 100
 }
 
-# 🚀 Send the request and get the response
+# 🚀 Send request and capture response
 response = requests.post(url, headers=headers, json=payload)
 
-# 📊 Print status code and response text before trying to parse
+# 📊 Print status code and raw response body
 print("Status Code:", response.status_code)
 print("Raw Response:", response.text)
 
-# 🔍 Attempt to parse JSON — with error handling
+# 🔍 Try to parse JSON response
 try:
     data = response.json()
     results = data.get("webPages", {}).get("value", [])
 
     if results:
         print(f"\n✅ Found {len(results)} result(s):\n")
-        for i, item in enumerate(results[:5], 1):  # Show top 5 matches
+        for i, item in enumerate(results[:5], 1):  # Top 5
             print(f"{i}. {item.get('name')}")
             print(f"   {item.get('snippet')}")
             print(f"   {item.get('url')}\n")
     else:
-        print("\n⚠ LangSearch ran successfully but returned no results. Try refining your query.")
+        print("\n⚠ LangSearch responded successfully, but no results matched your query.")
 except Exception as e:
-    print("❌ LangSearch response could not be parsed as JSON.")
+    print("❌ LangSearch returned a response that couldn’t be parsed as JSON.")
     print("Error:", str(e))
