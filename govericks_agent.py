@@ -45,4 +45,4 @@ try:
         print("\n❌ LangSearch did not return JSON. Response type:", response.headers.get("Content-Type"))
 except Exception as e:
     print("❌ LangSearch response could not be parsed as JSON.")
-    print("Error:", str(e))
+    print("Error:", str(e))
