@@ -11,8 +11,8 @@ headers = {
     "Content-Type": "application/json"
 }
 payload = {
-    "query": "Donald Trump visit to the UK or immigration speach",
-    "freshness": "noLimit",
+    "query": "Uk legal policy updates",
+    "freshness": "six months",
     "summary": True,
     "count": 100
 }
