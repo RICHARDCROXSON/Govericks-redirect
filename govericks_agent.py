@@ -1,41 +1,33 @@
-import requests
-import json
+name: Govericks Engine
 
-# 🚧 TEMPORARY: Hardcoded API key for testing
-API_KEY = "sk-bf2473b2f5dd4deb84ddc54bf1ca8d22"  # ← Replace this with your actual LangSearch key
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 * * * *'
 
-# 🔍 LangSearch query setup
-url = "https://api.langsearch.com/v1/web-search"
-headers = {
-    "Authorization": f"Bearer {API_KEY}",
-    "Content-Type": "application/json"
-}
-payload = {
-    "query": "Uk legal policy updates",
-    "freshness": "six months",
-    "summary": True,
-    "count": 100
-}
+jobs:
+  run-govericks:
+    runs-on: ubuntu-latest
 
-# 🚀 Send request and print results
-response = requests.post(url, headers=headers, data=json.dumps(payload))
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-# ✅ Parse and display results
-if response.status_code == 200:
-    results = response.json()
-    webpages = results.get("webPages", {}).get("value", [])
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with: python-version: '3.10'
 
-    if not webpages:
-        print("No vector-related results found.")
-    else:
-        print(f"Found {len(webpages)} vector candidates:\n")
-        for item in webpages:
-            print("🔹 Title:", item.get("name"))
-            print("🔗 URL:", item.get("url"))
-            print("📝 Summary:", item.get("summary", "No summary available"))
-            print("-" * 40)
-else:
-    print("LangSearch API error:", response.status_code)
-    print("Raw Response:", response.text)
+      - name: Show directory contents
+        run: ls -la
 
-print("✅ Govericks Agent executed successfully.")
+      - name: Confirm Python version
+        run: python --version
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Govericks script
+        run: python govericks_agent.py 
