@@ -11,10 +11,10 @@ headers = {
     "Content-Type": "application/json"
 }
 payload = {
-    "query": "construction law UK or disputes or Donald Trump",
+    "query": "Donald Trump visit to the UK or immigration speach",
     "freshness": "noLimit",
     "summary": True,
-    "count": 25
+    "count": 100
 }
 
 # 🚀 Send request and print results
