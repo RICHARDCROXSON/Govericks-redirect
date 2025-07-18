@@ -1,18 +1,18 @@
 import requests
 
-# 🔐 Your LangSearch API key — confirmed and locked
-LANGSEARCH_API_KEY = "sk-bf2473b2f5dd4deb84ddc54bf1ca8d22"  # ← Replace with your exact key if not already in place
+# 🔐 Insert your real LangSearch API key between the quotes below
+LANGSEARCH_API_KEY = "sk-bf2473b2f5dd4deb84ddc54bf1ca8d22"  # ← Replace this with your actual key
 
 # 🌐 LangSearch API endpoint
 url = "https://api.langsearch.com/v1/web-search"
 
-# 📦 Headers needed by LangSearch
+# 📦 Request headers — using your key
 headers = {
     "Authorization": f"Bearer {LANGSEARCH_API_KEY}",
     "Content-Type": "application/json"
 }
 
-# 📝 The payload you tested manually and know returns results
+# 📨 Query payload
 payload = {
     "query": "UK legal policy updates",
     "freshness": "sixMonths",
@@ -20,25 +20,26 @@ payload = {
     "count": 100
 }
 
-# 🚀 Send the request using proper JSON formatting
+# 🚀 Send the request and get the response
 response = requests.post(url, headers=headers, json=payload)
 
-# 📊 Print status and raw response — shows exactly what LangSearch replies
+# 📊 Print status code and response text before trying to parse
 print("Status Code:", response.status_code)
 print("Raw Response:", response.text)
 
-# 🔍 Try to parse response — this will succeed or clearly show why it doesn't
+# 🔍 Attempt to parse JSON — with error handling
 try:
     data = response.json()
     results = data.get("webPages", {}).get("value", [])
 
     if results:
         print(f"\n✅ Found {len(results)} result(s):\n")
-        for i, item in enumerate(results[:5], 1):  # Display top 5
+        for i, item in enumerate(results[:5], 1):  # Show top 5 matches
             print(f"{i}. {item.get('name')}")
             print(f"   {item.get('snippet')}")
             print(f"   {item.get('url')}\n")
     else:
-        print("\n⚠ No matches returned — LangSearch is working but found no vector content matching your query.")
+        print("\n⚠ LangSearch ran successfully but returned no results. Try refining your query.")
 except Exception as e:
-    print("❌ Error parsing LangSearch response:", str(e))
+    print("❌ LangSearch response could not be parsed as JSON.")
+    print("Error:", str(e))
