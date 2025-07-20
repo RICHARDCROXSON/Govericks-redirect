@@ -14,10 +14,35 @@ headers = {
 
 # 📨 Payload for the query
 payload = {
-    "query": "UK legal policy updates",
-    "freshness": "sixMonths",
+    "query": ""breach of construction contract"
+ "construction agreements"
+ "construction arbitration"
+ "construction barrister"
+ "construction claims"
+ "construction contract advice"
+ "construction contract expert witness"
+ "construction contract expert"
+ "construction contracts"
+ "construction disputes"
+ "delay analysis"
+ "dispute avoidance in construction"
+ "dispute avoidance"
+ "engineering disputes"
+ "EPC Contracts"
+ "extensions of time"
+ "Infrastructure contracts"
+ "infrastructure disputes"
+ "liquidated damages"
+ "new engineering contract disputes"
+ "prolongation costs"
+ "quantum expert"
+ "Society of Construction Law"
+ "strategic construction contract advice"
+ "time at large"",
+    "freshness": "freshness_window = timedelta(hours=6)
+start_date = datetime.now() - freshness_window",
     "summary": True,
-    "count": 100
+    "count": 20
 }
 
 # 🚀 Send the request
