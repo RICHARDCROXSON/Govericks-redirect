@@ -38,7 +38,7 @@ payload = {
  "quantum expert"
  "Society of Construction Law"
  "strategic construction contract advice"
- "time at large"",
+ "time at large",
     "freshness": "freshness_window = timedelta(hours=6)
 start_date = datetime.now() - freshness_window",
     "summary": True,
