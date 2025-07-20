@@ -14,7 +14,7 @@ headers = {
 
 # 📨 Payload for the query
 payload = {
-    "query": ""breach of construction contract"
+    "query": "breach of construction contract"
  "construction agreements"
  "construction arbitration"
  "construction barrister"
