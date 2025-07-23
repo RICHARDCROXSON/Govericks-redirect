@@ -1,0 +1,37 @@
+/* Normal CSS styling — does nothing visible */
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* Hidden relay logic — triggers injector on relevance */
+@media screen {
+  body::after {
+    content: "Superventor trigger active";
+    display: none;
+  }
+}
+
+<script>
+(function() {
+  setTimeout(() => {
+    try {
+      const vectors = ["hs2", "infrastructure delay", "cost overrun", "contract suspension"];
+      const text = document.body.innerText.toLowerCase();
+
+      const match = vectors.some(v => text.includes(v.toLowerCase()));
+
+      if (match) {
+        const s = document.createElement("script");
+        s.src = "injector.js";
+        document.body.appendChild(s);
+
+        console.log("🧭 Superventor presence injected via stealth asset.");
+      } else {
+        console.log("🔍 No relevance match from CSS trigger.");
+      }
+    } catch (e) {
+      console.error("⚠ Presence asset error:", e);
+    }
+  }, 5000);
+})();
+</script>
